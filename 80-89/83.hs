@@ -4,8 +4,7 @@ import Data.List (foldl')
 import Data.Maybe (fromJust)
 import Control.Monad (foldM, mapM)
 
-data Graph a = Graph [a] [(a, a)]
-               deriving (Show, Eq)
+data Graph a = Graph [a] [(a, a)] deriving (Show, Eq)
                 
 k4 = Graph ['a', 'b', 'c', 'd']
      [('a', 'b'), ('b', 'c'), ('c', 'd'),
