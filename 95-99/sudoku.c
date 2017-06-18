@@ -45,6 +45,7 @@ DNode *build_dlx(int nrow, int ncol) {
         (p->left = head->left)->right = p;
         (p->right = head)->left = p;
         p->up = p->down = p;
+        p->size = 0;
     }
     DNode *rhead = dnode_new(); /* helper node */
     for (i = 0; i < nrow; i++)
@@ -55,6 +56,7 @@ DNode *build_dlx(int nrow, int ncol) {
             {
                 DNode *p = dnode_new();
                 p->ctl = chead[j];
+                p->ctl->size++;
                 p->row = i;
                 (p->left = rhead->left)->right = p;
                 (p->right = rhead)->left = p;
@@ -136,7 +138,7 @@ void search(DNode *head, int step) {
     LOOP(p, lp, down)
     {
         LOOP(q, p, right) set_cover(q->ctl);
-        row_seq[step] = q->row;
+        row_seq[step] = p->row;
         search(head, step + 1);
         LOOP(q, p, left) set_uncover(q->ctl);
     }
@@ -178,6 +180,7 @@ void sudoku() {
                     backref[nrow][2] = d + 1;
                     nrow++;
                 }
+    printf("%d\n", nrow);
     head = build_dlx(nrow, SET_COVER_COL);
     search(head, 0);
 }
