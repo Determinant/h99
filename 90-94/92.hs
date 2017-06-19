@@ -1,4 +1,4 @@
-import Data.List (sortBy)
+import Data.List (sortBy, foldl')
 import Data.Ord (comparing)
 
 vonKoch :: [(Int, Int)] -> [[(Int, Int)]]
@@ -10,7 +10,7 @@ vonKoch edges = koch (reverse adj) [] [] []
                                 | x <- [1..maxvn],
                                   x `notElem` vused,
                                   let en = map (abs . (x-)) (map (findn vplan) us),
-                                  let (eused', f) = foldl (\(l, f) d ->
+                                  let (eused', f) = foldl' (\(l, f) d ->
                                         (d:l, f && d `notElem` l
                                                 && 1 <= d && d <= maxen))
                                         (eused, True) en, f]
